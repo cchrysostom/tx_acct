@@ -1,0 +1,5 @@
+Read the input file, inputdata.txt.
+client,available,held,total,locked
+2,0,0,15.0012,true
+3,0,0,0,false
+1,1225.8572,0,1225.8572,false
