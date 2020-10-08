@@ -186,6 +186,7 @@ impl AccountTransactions {
                 if tx.disputed && tx.amount <= acct.held {
                     acct.held -= tx.amount;
                     acct.available += tx.amount;
+                    acct.total = acct.held + acct.available;
                     tx.disputed = false;
                 } else {
                     eprintln!("Unable to resolve held funds for disputed transaction, {}, from client, {}. Ignoring resolve.", transaction_msg.tx, transaction_msg.client);
@@ -212,6 +213,7 @@ impl AccountTransactions {
             if let Some(tx) = self.txs_txid.get_mut(&transaction_msg.tx) {
                 if tx.disputed && tx.amount <= acct.held {
                     acct.held -= tx.amount;
+                    acct.total = acct.held + acct.available;
                     acct.locked = true;
                     tx.disputed = false;
                 } else {
@@ -245,7 +247,7 @@ fn main() {
     let result = read_file(filename, &mut account_txs);
     match result {
         Ok(_) => { eprintln!("Read the input file, {}.", filename); }
-        Err(_) => { eprintln!("Input file read failed, {}", filename); exit(1) }
+        Err(e) => { eprintln!("Input file read failed, {}. {}", filename, e); exit(1) }
     }
 
     output_accounts(&account_txs);
