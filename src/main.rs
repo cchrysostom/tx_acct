@@ -244,7 +244,7 @@ fn main() {
     let mut account_txs = AccountTransactions::new();
     let result = read_file(filename, &mut account_txs);
     match result {
-        Ok(_) => { println!("Read the input file, {}.", filename); }
+        Ok(_) => { eprintln!("Read the input file, {}.", filename); }
         Err(_) => { eprintln!("Input file read failed, {}", filename); exit(1) }
     }
 
